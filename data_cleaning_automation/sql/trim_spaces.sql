@@ -1,0 +1,1 @@
+-- trim spaces SQL script
