@@ -1,0 +1,6 @@
+{
+  "host": "localhost",
+  "user": "root",
+  "password": "YOUR_PASSWORD_HERE",
+  "database": "autocleanr_db"
+}
