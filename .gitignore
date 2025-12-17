@@ -1,1 +1,4 @@
+#Ignore the input dataset files
 data_cleaning_automation/config/db_config.json
+# Ignore generated output files
+data_cleaning_automation/output/
