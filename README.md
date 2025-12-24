@@ -33,90 +33,18 @@ autocleanr/
 ├── .gitignore
 ├── README.md
 
-the story flowwwwwwwww... (might help someone who is creating this)
+storyy floww of the project:
 
-Once the flow was clear, the next challenge was separation of responsibility.
-This project has two different worlds:
-Python → automation, orchestration, file handling
-SQL → actual data cleaning logic
+Autocleanr began with a simple observation: most data projects spend more time cleaning data than using it. After working on a data cleaning and exploratory analysis project entirely in SQL, it became clear that the work was repetitive, predictable, and well-suited for automation. The idea was not to invent a new cleaning technique, but to systematize a process that databases already do well.
 
-So instead of mixing everything in one place, the project is deliberately split into layers:
-Python scripts only move data and trigger actions
-SQL files only define how data is cleaned
+Before writing code, the focus was on defining the flow. Autocleanr is built around a clear separation of responsibilities. Python acts as the orchestration layer, handling file ingestion, execution order, and automation. SQL acts as the transformation engine, performing all data cleaning operations directly inside the database. This separation avoids tightly coupled scripts and reflects how production-grade data pipelines are structured.
 
-This makes the project:
-easier to understand
-easier to debug
-closer to how real-world data pipelines are built
+The choice to combine Python and SQL was intentional. Python excels at workflow control and system integration, but data cleaning libraries operate in application memory and do not scale efficiently for large structured datasets. SQL, in contrast, executes inside the database engine, benefits from query optimization and indexing, and scales naturally as data grows. In Autocleanr, Python serves as the conductor, coordinating the pipeline, while SQL performs the heavy lifting.
 
-why python + sql and not just one?
-Python is great at:
-reading CSV files
-automating workflows
-connecting systems together
-But Python (pandas) works in application memory, which means:
-limited by RAM
-slower for very large datasets
+Security and portability were treated as first-class concerns. Database credentials are stored locally and excluded from version control using .gitignore, while example configuration files are provided to document structure without exposing secrets. The same principle applies to data outputs: real datasets and outputs remain local, while a curated example output is included to demonstrate the pipeline’s behavior.
 
-SQL, on the other hand:
+Execution is driven through a single entry point. Running python runall.py triggers a deterministic workflow: raw CSV data is ingested into MySQL, SQL-based cleaning transformations are applied in sequence, and the cleaned data is materialized back as a CSV file. While intentionally lightweight, this flow mirrors an ETL-style pipeline used in real data engineering systems.
 
-runs inside the database
-is optimized for large datasets
-uses indexes and query planners
-scales much better
+At its current stage, Autocleanr supports trimming, null normalization, duplicate removal, and clean data export. The project is not about replacing SQL or Python, but about using each tool where it is strongest to build a scalable, understandable, and disciplined data cleaning pipeline.
 
-So Autocleanr uses Python as the conductor and SQL as the worker.
-
-Python tells what to do.
-SQL decides how to do it efficiently.
-about credentials & security (important design decision)
-To connect Python and MySQL, database credentials are required.
-Hardcoding credentials inside scripts is unsafe and unprofessional, especially for public repositories.
-So this project uses:
-*db_config.json → stores DB credentials locally
-*.gitignore → ensures sensitive files are never pushed to GitHub
-*db_config_example.json → helps others understand the structure without exposing secrets
-
-This design:
-
-keeps credentials secure
-allows portability across systems
-prevents accidental data leaks
-The same idea is applied to datasets and outputs:
-real datasets stay private
-real outputs stay local
-only sample outputs are shared for transparency
-why output_example exists
-Since the actual dataset and output are ignored, someone viewing the repository might wonder:
-“What does this tool actually produce?”
-That’s why -- output_example/ exists.
-It acts as:
-proof that the pipeline works
-a reference for expected output
-documentation through data
-
-how the pipeline actually runs
-Everything is tied together using a single entry point:
---python runall.py
-When this command is executed:
-
-Python reads the CSV file
-Uploads it into MySQL as a raw table
-Executes SQL cleaning scripts step by step
-Fetches the cleaned table back
-Saves the cleaned dataset as a CSV file
-
-This simulates a real ETL-style pipeline, even though the project is intentionally kept simple.
-
-Autocleanr currently supports:
-Trimming unwanted spaces
-Handling NULL and empty values
-Removing duplicate records
-Exporting cleaned datasets
-
-final note
-
-Autocleanr is not about replacing SQL or Python.
-It’s about using each tool for what it does best
-and building a clean, scalable, and understandable data cleaning pipeline.
 
