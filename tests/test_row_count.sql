@@ -1,10 +1,8 @@
-SELECT
-    'Row count increased after cleaning' AS error_message,
-    raw_rows,
-    clean_rows
+SELECT 1
 FROM (
     SELECT
-        (SELECT COUNT(*) FROM raw_table)  AS raw_rows,
+        (SELECT COUNT(*) FROM uploaded_data) AS raw_rows,
         (SELECT COUNT(*) FROM clean_table) AS clean_rows
-) counts
+) t
 WHERE clean_rows > raw_rows;
+

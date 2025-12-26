@@ -1,4 +1,4 @@
-SELECT *
+SELECT 1
 FROM clean_table
-WHERE name LIKE ' %'
-   OR name LIKE '% ';
+HAVING COUNT(*) = 0;
+

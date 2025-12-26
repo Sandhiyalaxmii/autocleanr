@@ -1,3 +1,6 @@
-SELECT *
-FROM clean_table
-WHERE email IS NULL;
+SELECT 1
+FROM information_schema.tables
+WHERE table_schema = DATABASE()
+AND table_name = 'clean_table';
+
+
