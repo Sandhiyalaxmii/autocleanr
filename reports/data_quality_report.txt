@@ -1,8 +1,8 @@
 AUTOCLEANR — DATA QUALITY REPORT
-Generated at: 2025-12-26 21:15:02
+Generated at: 2025-12-26 21:30:58
 ----------------------------------------
-test_null_email.sql: FAIL
+test_not_empty.sql: PASS
 test_row_count.sql: PASS
-test_trim.sql: PASS
+test_schema_check.sql: FAIL
 ----------------------------------------
 FINAL RESULT: SOME TESTS FAILED 
