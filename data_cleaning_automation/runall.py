@@ -9,11 +9,13 @@ def run(script_name):
     script_path = os.path.join(SCRIPTS_DIR, script_name)
     subprocess.run([sys.executable, script_path], check=True)
 
-print("Starting AutoCleanr pipeline")
+print("🚀 Starting Autocleanr pipeline")
 
 run("upload_to_mysql.py")
 run("clean_with_mysql.py")
 run("download_cleaned.py")
 
-print("AutoCleanr pipeline completed successfully")
+print("✅ Autocleanr pipeline completed successfully")
+
+
 
